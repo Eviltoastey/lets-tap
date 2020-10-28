@@ -16,7 +16,7 @@ class User extends Authenticatable
      */
     public function styles()
     {
-        return $this->hasMany(Style::class);
+        return $this->belongsToMany(Style::class);
     }
 
     /**
@@ -24,7 +24,7 @@ class User extends Authenticatable
      */
     public function pictures()
     {
-        return $this->hasMany('App\Models\UserPicture');
+        return $this->hasMany(UserPicture::class);
     }
 
     /**
@@ -32,7 +32,7 @@ class User extends Authenticatable
      */
     public function bar()
     {
-        return $this->hasOne('App\Models\Bar');
+        return $this->hasOne(Bar::class);
     }
 
     /**
@@ -40,7 +40,7 @@ class User extends Authenticatable
      */
     public function brewery()
     {
-        return $this->hasOne('App\Models\Brewery');
+        return $this->hasOne(Brewery::class);
     }
 
     /**
@@ -48,7 +48,7 @@ class User extends Authenticatable
      */
     public function store()
     {
-        return $this->hasOne('App\Models\Store');
+        return $this->hasOne(Store::class);
     }
 
     /**
@@ -56,7 +56,7 @@ class User extends Authenticatable
      */
     public function location()
     {
-        return $this->hasOne('App\Models\Location');
+        return $this->hasOne(Location::class);
     }
 
     /**
@@ -64,7 +64,7 @@ class User extends Authenticatable
      */
     public function beer()
     {
-        return $this->hasOne('App\Models\beer');
+        return $this->hasOne(Beer::class);
     }
 
     /**

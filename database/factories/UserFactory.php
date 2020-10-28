@@ -26,6 +26,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
@@ -38,7 +39,7 @@ class UserFactory extends Factory
             'beer_id' => Beer::factory(),
             'bar_id' => Bar::factory(),
             'brewery_id' => Brewery::factory(),
-            'store_id' => Store::factory(),
+            'store_id' => Store::factory()
         ];
     }
 }

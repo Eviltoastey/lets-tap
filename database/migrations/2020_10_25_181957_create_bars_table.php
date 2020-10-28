@@ -24,8 +24,6 @@ class CreateBarsTable extends Migration
             $table->string('city');
             $table->string('postal_code');
             $table->string('maps_link');
-
-            // make connection to beers
         });
     }
 

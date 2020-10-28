@@ -20,7 +20,7 @@ class CreateUserPictureTable extends Migration
 
             // custom tables
             $table->string('url')->unique();
-            $table->integer('priority')->unique();
+            $table->integer('priority');
 
             // user relation one to many
             $table->unsignedBigInteger('user_id')->index();
