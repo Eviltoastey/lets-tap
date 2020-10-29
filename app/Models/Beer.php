@@ -49,6 +49,7 @@ class Beer extends Model
     protected $fillable = [
         'name',
         'style',
-        'average_rating'
+        'average_rating',
+        'brewery'
     ];
 }
