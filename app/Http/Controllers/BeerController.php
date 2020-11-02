@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\Beer as BeerResource;
 use App\Http\Resources\BeerCollection;
-use App\Models\Brewery;
 use App\Models\Beer;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreBeer;
+use App\Http\Requests\UpdateBeer;
 
 class BeerController extends Controller
 {
@@ -21,9 +21,10 @@ class BeerController extends Controller
        return new BeerCollection($beers);
     }
 
-    public function store(Request $request)
+    public function store(StoreBeer $request)
     {
-        $this->validator($request);
+        // Retrieve the validated input data...
+        $request->validated();
 
         $beer = new Beer($request->all());
         $beer->save();
@@ -50,9 +51,10 @@ class BeerController extends Controller
         return new BeerResource($beer);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateBeer $request, $id)
     {
-        $this->validator($request);
+        // Retrieve the validated input data...
+        $request->validated();
 
         $beer = Beer::find($id);
         $beer->update($request->all());
@@ -72,19 +74,5 @@ class BeerController extends Controller
     public function destroy($id)
     {
         return Beer::destroy($id);
-    }
-
-    public function validator(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'average_rating' => 'required|numeric',
-            'brewery_id' => 'required|numeric',
-            'flavours' => 'required|array',
-            'styles' => 'required|array'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toArray(), 422);
-        }
     }
 }

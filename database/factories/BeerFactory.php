@@ -25,7 +25,7 @@ class BeerFactory extends Factory
         return [
             'name' => $this->faker->name,
             'average_rating' => 1.0,
-            'brewery_id' => Brewery::factory()   
+            'brewery' => Brewery::factory()   
         ];
     }
 }

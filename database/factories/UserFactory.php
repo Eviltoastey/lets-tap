@@ -34,11 +34,11 @@ class UserFactory extends Factory
             'description' => Str::random(100),
             'phone' => random_int(0,9),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '5CNcZywYFO9tszoErFjdUBGVGoQlairFBRsGd62T9fVM1gRsK7E3ls7ZBbCwFH3HxFaAFzrYRx1GH1z9FJRmzWTzdd86jHd39Dqa', // password
             'remember_token' => Str::random(10),
             'beer_id' => Beer::factory(),
             'bar_id' => Bar::factory(),
-            'brewery_id' => Brewery::factory(),
+            'brewery' => Brewery::factory(),
             'store_id' => Store::factory()
         ];
     }

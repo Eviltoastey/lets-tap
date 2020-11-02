@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\BeerController;
-use App\Http\Resources\Beer;
-use Illuminate\Http\Request;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// login and registration routes
+Route::post('user/login', [LoginController::class, 'login']);
 
-
+// admin crud routes
 Route::resource('beers', BeerController::class);
+
+// For these routes an bearer token is needed
+Route::middleware(['auth:api'])->group(function () {
+    Route::get('user/all', [UserController::class, 'index']);
+});
