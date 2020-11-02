@@ -20,10 +20,11 @@ use Illuminate\Support\Facades\Route;
 // login and registration routes
 Route::post('user/login', [LoginController::class, 'login']);
 
-// admin crud routes
-Route::resource('beers', BeerController::class);
-
 // For these routes an bearer token is needed
-Route::middleware(['auth:api'])->group(function () {
-    Route::get('user/all', [UserController::class, 'index']);
+Route::middleware(['auth:api', 'role'])->group(function () {
+
+    // admin crud routes
+    Route::resource('users', UserController::class);
+    Route::resource('beers', BeerController::class);
+
 });

@@ -15,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return [
+        'Error' => '404: not found',
+        'Tips' => [
+            'Headers' => 'Make sure to set the header to application/json',
+            'Permissions' => 'Make sure that you hae to correct permissions',
+            'Routes' => 'Make sure to call an existing route',
+        ]
+    ];
 });

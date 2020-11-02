@@ -9,6 +9,8 @@ use App\Models\Beer;
 use App\Models\Bar;
 use App\Models\Brewery;
 use App\Models\Store;
+use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserFactory extends Factory
 {
@@ -26,19 +28,18 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-
         return [
-            'name' => $this->faker->name,
+            'name' => 'admin',
             'email' => $this->faker->unique()->safeEmail,
             'age' => random_int(0,20),
             'description' => Str::random(100),
             'phone' => random_int(0,9),
             'email_verified_at' => now(),
-            'password' => '5CNcZywYFO9tszoErFjdUBGVGoQlairFBRsGd62T9fVM1gRsK7E3ls7ZBbCwFH3HxFaAFzrYRx1GH1z9FJRmzWTzdd86jHd39Dqa', // password
+            'password' => Hash::make('password'), // needs to be changed to ENV var
             'remember_token' => Str::random(10),
             'beer_id' => Beer::factory(),
             'bar_id' => Bar::factory(),
-            'brewery' => Brewery::factory(),
+            'brewery_id' => Brewery::factory(),
             'store_id' => Store::factory()
         ];
     }

@@ -50,6 +50,6 @@ class Beer extends Model
         'name',
         'style',
         'average_rating',
-        'brewery'
+        'brewery_id'
     ];
 }
