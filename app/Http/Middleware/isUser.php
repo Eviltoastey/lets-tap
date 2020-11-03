@@ -4,12 +4,12 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class isAdmin
+class isUser
 {
     
     public function handle($request, Closure $next)
-    {   
-        if(!$request->user()->getRoleNames()->contains('admin')){
+    {
+        if(!$request->user()->getRoleNames()->contains('user')){
             return response()->json([
                 'status' => 401,
                 'message' => 'Unauthorized',

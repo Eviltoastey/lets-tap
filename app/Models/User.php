@@ -78,7 +78,12 @@ class User extends Authenticatable
         'age',
         'description',
         'phone',
-        'email'
+        'email',
+        'password',
+        'beer_id',
+        'bar_id',
+        'brewery_id',
+        'store_id',
     ];
 
     /**
@@ -87,7 +92,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 

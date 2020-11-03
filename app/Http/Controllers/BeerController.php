@@ -14,11 +14,22 @@ class BeerController extends Controller
 
     public function index()
     {
-        // get all user records
-       $beers = Beer::paginate();
+        $beers = Beer::paginate();
 
-       // pass all eloquent objects to user collection
-       return new BeerCollection($beers);
+        new BeerCollection($beers);
+    }
+
+    public function show($id)
+    {
+        $beer = Beer::find($id);
+
+        if (!$beer) {
+            return response([
+                'message' => 'User could not be found'
+            ], 404);
+        };
+
+        return new BeerResource($beer);
     }
 
     public function store(StoreBeer $request)
@@ -32,22 +43,6 @@ class BeerController extends Controller
         $beer->flavours()->sync($request->input('flavours'));
         $beer->styles()->sync($request->input('styles'));
         
-        return (new BeerResource($beer))
-        ->additional([
-            'meta' => [
-                'success' => true,
-                'message' => "beer created"
-            ]
-        ]);
-
-    }
-
-    public function show($id)
-    {
-        // get database model
-        $beer = Beer::find($id);
-        
-        // get resource for database model
         return new BeerResource($beer);
     }
 
@@ -57,22 +52,33 @@ class BeerController extends Controller
         $request->validated();
 
         $beer = Beer::find($id);
+
+        if (!$beer) {
+            return response([
+                'message' => 'Beer could not be found'
+            ], 404);
+        };
+
         $beer->update($request->all());
         
         $beer->flavours()->sync($request->input('flavours'));
         $beer->styles()->sync($request->input('styles'));
 
-        return (new BeerResource($beer))
-        ->additional([
-            'meta' => [
-                'success' => true,
-                'message' => "beer updated"
-            ]
-        ]);
+        return new BeerResource($beer);
     }
 
     public function destroy($id)
     {
-        return Beer::destroy($id);
+        $deleted = Beer::destroy($id);
+    
+        if(!$deleted) {
+            return response([
+                'message' => 'Beer could not be found'
+            ], 404 ); 
+        }
+
+        return response([
+            'message' => 'Beer deleted'
+        ], 200);
     }
 }

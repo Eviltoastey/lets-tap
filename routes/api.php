@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BeerController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,12 +20,18 @@ use Illuminate\Support\Facades\Route;
 
 // login and registration routes
 Route::post('user/login', [LoginController::class, 'login']);
+Route::post('user/register', [RegisterController::class, 'register']);
 
-// For these routes an bearer token is needed
-Route::middleware(['auth:api', 'role'])->group(function () {
+// admin routes protected with admin role and JWT
+Route::middleware(['auth:api', 'is.admin'])->group(function () {
 
     // admin crud routes
     Route::resource('users', UserController::class);
     Route::resource('beers', BeerController::class);
+
+});
+
+// user routes protected with user role and JWT
+Route::middleware(['auth:api', 'is.user'])->group(function () {
 
 });
