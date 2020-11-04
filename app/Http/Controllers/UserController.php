@@ -32,9 +32,6 @@ class UserController extends Controller
 
     public function update(UpdateUser $request, int $id)
     {
-        // Retrieve the validated input data...
-        $request->validated();
-
         $user = User::find($id);
 
         if (!$user) {
@@ -42,6 +39,9 @@ class UserController extends Controller
                 'message' => 'User could not be found'
             ], 404);
         }
+
+        // Retrieve the validated input data...
+        $request->validated();
 
         $user->update($request->all());
         $user->styles()->sync($request->input('styles'));
@@ -53,7 +53,7 @@ class UserController extends Controller
     {
         $deleted = User::destroy($id);
     
-        if(!$deleted) {
+        if (!$deleted) {
             return response([
                 'message' => 'User could not be found'
             ], 404 ); 

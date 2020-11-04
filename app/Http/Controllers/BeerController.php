@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\Beer as BeerResource;
 use App\Http\Resources\BeerCollection;
 use App\Models\Beer;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreBeer;
 use App\Http\Requests\UpdateBeer;
 
@@ -16,7 +15,7 @@ class BeerController extends Controller
     {
         $beers = Beer::paginate();
 
-        new BeerCollection($beers);
+        return new BeerCollection($beers);
     }
 
     public function show($id)
@@ -25,7 +24,7 @@ class BeerController extends Controller
 
         if (!$beer) {
             return response([
-                'message' => 'User could not be found'
+                'message' => 'Beer could not be found'
             ], 404);
         };
 
@@ -48,9 +47,6 @@ class BeerController extends Controller
 
     public function update(UpdateBeer $request, $id)
     {
-        // Retrieve the validated input data...
-        $request->validated();
-
         $beer = Beer::find($id);
 
         if (!$beer) {
@@ -58,6 +54,9 @@ class BeerController extends Controller
                 'message' => 'Beer could not be found'
             ], 404);
         };
+
+        // Retrieve the validated input data...
+        $request->validated();
 
         $beer->update($request->all());
         
@@ -69,13 +68,15 @@ class BeerController extends Controller
 
     public function destroy($id)
     {
-        $deleted = Beer::destroy($id);
+        $beer = Beer::find($id);
     
-        if(!$deleted) {
+        if (!$beer) {
             return response([
                 'message' => 'Beer could not be found'
             ], 404 ); 
         }
+        
+        $beer::destroy($id);
 
         return response([
             'message' => 'Beer deleted'

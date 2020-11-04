@@ -26,10 +26,10 @@ class Register extends FormRequest
     {
         return [
             'email' => [
-                'required|email',
+                'required', 'email',
                 // add rule so email must be unique
                 Rule::unique('users')->ignore(
-                    $this->route()->parameters()["user"]
+                    $this->request->all()['email']
                 ) 
             ],
             'password' => 'required|string',
@@ -38,10 +38,10 @@ class Register extends FormRequest
             'brewery_id' => 'required|numeric',
             'age' => 'required|numeric',
             'phone' => [
-                'required|numeric',
+                'required', 'numeric',
                 // add rule so phone must be unique
                 Rule::unique('users')->ignore(
-                    $this->route()->parameters()["user"]
+                    $this->request->all()['phone']
                 ) 
             ],
             'bar_id' => 'required|numeric',

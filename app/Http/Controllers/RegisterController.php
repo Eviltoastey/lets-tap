@@ -29,8 +29,6 @@ class RegisterController extends Controller
 
         $user->assignRole('user');
 
-        return response()([
-            'data' => new UserResource($user)
-        ], 200);
+        new UserResource($user);
     }
 }

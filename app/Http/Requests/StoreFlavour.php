@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class Login extends FormRequest
+class StoreFlavour extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +25,13 @@ class Login extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email',
-            'password' => 'required|string'
+            'name' => [
+                'required', 'string',
+                // add rule so email must be unique
+                Rule::unique('flavours')->ignore(
+                    $this->request->all()['name']
+                ) 
+            ],
         ];
     }
-
 }
