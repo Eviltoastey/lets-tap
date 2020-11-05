@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBrewery;
 use App\Http\Requests\UpdateBrewery;
+use App\Http\Resources\BeerCollection;
 use App\Http\Resources\Brewery as BreweryResource;
 use App\Http\Resources\BreweryCollection;
+use App\Models\Beer;
 use App\Models\Brewery;
-
+use App\Models\User;
 
 class BreweryController extends Controller
 {
@@ -63,16 +65,16 @@ class BreweryController extends Controller
 
     public function destroy($id)
     {
-        $deleted = Brewery::destroy($id);
-    
-        if (!$deleted) {
+        $brewery = Brewery::destroy($id);
+
+        if (!$brewery) {
             return response([
                 'message' => 'Brewery could not be found'
             ], 404 ); 
         }
 
         return response([
-            'message' => 'Brewery deleted'
+            'message' => 'Brewery and related beers deleted'
         ], 200);
     }
 }

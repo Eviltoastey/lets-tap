@@ -24,7 +24,7 @@ class CreateBeersTable extends Migration
 
             // many beers have one brewery
             $table->unsignedBigInteger('brewery_id')->index();
-            $table->foreign('brewery_id')->references('id')->on('breweries');
+            $table->foreign('brewery_id')->references('id')->on('breweries')->onDelete('cascade');
             
         });
     }

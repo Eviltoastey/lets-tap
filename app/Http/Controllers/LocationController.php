@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLocation;
 use App\Http\Requests\UpdateLocation;
 use App\Models\Location;
 use App\Http\Resources\Location as LocationResource;
@@ -22,19 +23,29 @@ class LocationController extends Controller
         return new LocationResource($location);
     }
 
-    public function update(UpdateLocation $request, int $id)
+    public function store(StoreLocation $request)
     {
-        $location = Location::find(['user' => 1]);
-
-        if (!$location) {
-            $location = new Location([
-                'lat' => 1.0,
-                'lon' => -1.0
-            ]);
-        };
-
          // Retrieve the validated input data...
          $request->validated();
+
+         $location = new Location($request->all());
+         $location->save();
+         
+         return new LocationResource($location);    
+    }
+
+    public function update(UpdateLocation $request, int $id)
+    {
+       // Retrieve the validated input data...
+       $request->validated();
+
+        $location = Location::find($id);
+
+        if (!$location) {
+            return response([
+                'message' => 'Location could not be found'
+            ], 404);
+        };
 
          $location->update($request->all());
          

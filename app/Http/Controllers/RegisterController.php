@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Register;
-use App\Http\Resources\User as UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
@@ -24,11 +22,16 @@ class RegisterController extends Controller
         $user = new User($request->all());
         $user->password = Hash::make($request->password);
         $user->save();
-        
-        $user->styles()->sync($request->input('styles'));
 
         $user->assignRole('user');
 
-        new UserResource($user);
+        $token = $user->createToken('user_token')->accessToken;
+
+        return response([
+            'data' => [
+                'user' => $user,
+                'access_token' => $token
+            ]
+        ], 200);
     }
 }

@@ -35,7 +35,6 @@ class Register extends FormRequest
             'password' => 'required|string',
             'name' => 'required|string',
             'description' => 'required|string',
-            'brewery_id' => 'required|numeric',
             'age' => 'required|numeric',
             'phone' => [
                 'required', 'numeric',
@@ -44,10 +43,6 @@ class Register extends FormRequest
                     $this->request->all()['phone']
                 ) 
             ],
-            'bar_id' => 'required|numeric',
-            'store_id' => 'required|numeric',
-            'beer_id' => 'required|numeric',
-            'styles' => 'required|array'
         ];
     }
 }

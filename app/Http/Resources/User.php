@@ -32,10 +32,10 @@ class User extends JsonResource
             "age" => $this->age,
             "description" => $this->description,
             "phone" => $this->phone,
-            "beer_id" => new BeerResource(Beer::find($this->beer_id)),
-            "bar_id" => new BarResource(Bar::find($this->bar_id)),
-            "brewery_id" => new BreweryResource(Brewery::find($this->brewery_id)),
-            "store_id" => new StoreResource(Store::find($this->store_id))
+            "beer" => new BeerResource(Beer::find($this->beer_id)),
+            "bar" => new BarResource(Bar::find($this->bar_id)),
+            "brewery" => new BreweryResource(Brewery::find($this->brewery_id)),
+            "store" => new StoreResource(Store::find($this->store_id))
         ];
     }
 }

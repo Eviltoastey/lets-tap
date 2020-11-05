@@ -7,6 +7,8 @@ use App\Http\Resources\BeerCollection;
 use App\Models\Beer;
 use App\Http\Requests\StoreBeer;
 use App\Http\Requests\UpdateBeer;
+use App\Models\Flavour;
+use App\Models\User;
 
 class BeerController extends Controller
 {
@@ -75,7 +77,10 @@ class BeerController extends Controller
                 'message' => 'Beer could not be found'
             ], 404 ); 
         }
-        
+
+        $beer->flavours()->detach();
+        $beer->styles()->detach();
+
         $beer::destroy($id);
 
         return response([

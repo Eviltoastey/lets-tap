@@ -30,7 +30,7 @@ class UserFactory extends Factory
     {
         return [
             'name' => 'admin',
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => 'admin@test.nl',
             'age' => random_int(0,20),
             'description' => Str::random(100),
             'phone' => random_int(0,9),

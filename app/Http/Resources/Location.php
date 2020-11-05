@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Resources;
-
+use App\Http\Resources\User as UserResource;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Location extends JsonResource
@@ -16,7 +17,8 @@ class Location extends JsonResource
     {
         return [
             'lat' => $this->lat,
-            'lon' => $this->lon
+            'lon' => $this->lon,
+            'user' => new UserResource(User::find($this->user_id))
         ];
     }
 }
