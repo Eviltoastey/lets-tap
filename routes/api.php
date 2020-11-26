@@ -29,8 +29,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('user/login', [LoginController::class, 'login']);
 Route::post('user/register', [RegisterController::class, 'register']);
 
+Route::get('/email/verify', [RegisterController::class, 'notice'])->middleware(['auth'])->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->middleware(['signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', [RegisterController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 // admin routes protected with admin role and JWT
-Route::middleware(['auth:api', 'is.admin'])->group(function () {
+Route::middleware(['auth:api', 'is.admin', 'verified'])->group(function () {
 
     // admin crud routes
     Route::resource('users', UserController::class);
@@ -45,6 +51,6 @@ Route::middleware(['auth:api', 'is.admin'])->group(function () {
 });
 
 // user routes protected with user role and JWT
-Route::middleware(['auth:api', 'is.user'])->group(function () {
+Route::middleware(['auth:api', 'is.user', 'verified'])->group(function () {
 
 });

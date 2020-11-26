@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Location;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 
 class UserObserver
 {
@@ -22,6 +23,8 @@ class UserObserver
         ]);
 
         $location->save();
+        
+        event(new Registered($user));
         
     }
 }
